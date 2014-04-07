@@ -1,6 +1,11 @@
 #!/bin/bash
 SAVED_FILE="quote"
 
+if [ -z "$1" ]; then
+	echo "No list of links given. Exiting..."
+	exit 1
+fi
+
 getQuote() {
 
 	LINKS=$(cat "$1" | grep -v -e '^[[:space:]]*$' -e '^[[:space:]]*#')
