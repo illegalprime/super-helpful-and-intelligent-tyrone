@@ -1,13 +1,26 @@
 #!/bin/bash
 SAVED_FILE="quote"
 
-play "$SAVED_FILE"
+getQuote() {
 
-rm "$SAVED_FILE"
+	LINKS=$(cat "$1" | grep -v -e '^[[:space:]]*$' -e '^[[:space:]]*#')
+	COUNT=$(echo "$LINKS" | wc -l)
+	PICK=$((($RANDOM % $COUNT) + 1))
+	QUOTE=$(echo "$LINKS" | sed -n ${PICK}p)
+	
+	wget -O "$SAVED_FILE" "$QUOTE"
+}
 
-LINKS=$(cat "$1" | grep -v -e '^[[:space:]]*$' -e '^[[:space:]]*#')
-COUNT=$(echo "$LINKS" | wc -l)
-PICK=$((($RANDOM % $COUNT) + 1))
-QUOTE=$(echo "$LINKS" | sed -n ${PICK}p)
+playAndDelete() {
+	play "$1"
+	rm   "$1"
+}
 
-wget -O "$SAVED_FILE" "$QUOTE"
+if [ -s "$SAVED_FILE" ]; then
+	playAndDelete "$SAVED_FILE"
+else
+	getQuote "$1"
+	playAndDelete "$SAVED_FILE"
+fi
+
+getQuote "$1"
