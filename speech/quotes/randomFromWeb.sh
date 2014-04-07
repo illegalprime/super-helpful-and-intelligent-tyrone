@@ -1,5 +1,5 @@
 #!/bin/bash
-SAVED_FILE="quote"
+SAVED_FILE="quote-"$(echo "$1" | tr '/' '_' | tr '.' '_')
 
 if [ -z "$1" ]; then
 	echo "No list of links given. Exiting..."
