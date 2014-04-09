@@ -1,7 +1,7 @@
 Super Helpful and Intelligent Tyrone
 ====================================
 
-A Super Helpful and Intelligent dorm automation system, named Tyrone. No specific purpose, other than a to automate a dorm room however we see fit.
+A Super Helpful and Intelligent dorm automation system, named Tyrone. No specific purpose, other than to automate a dorm room however we see fit.
 
 Expected Operating Conditions:
  - Raspberry Pi Model B rev. 2
