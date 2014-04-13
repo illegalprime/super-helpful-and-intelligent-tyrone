@@ -13,6 +13,8 @@ import httplib2
 import gflags
 import time
 
+import json
+
 calendars = {"Michael": []}
 events    = {"Michael": []}
 #daylight_savings = True    # Not actually used
@@ -26,23 +28,34 @@ nform = '%Y-%m-' + str(day + 1) + 'T00:00:00%z'
 time_max = time.strftime(nform)
 print "From " + time_min + " to " + time_max
 
+f = open("secret/client_secret.json", "r")
+secrets = json.loads(f.read())
+f.close()
+
 FLAGS = gflags.FLAGS
 FLOW = OAuth2WebServerFlow(
-    client_id=secrets[0],
-    client_secret=secrets[1],
+    client_id=secrets['installed']['client_id'],
+    client_secret=secrets['installed']['client_secret'],
     scope='https://www.googleapis.com/auth/calendar',
     user_agent='tyrone/0.0')
 
-storage = Storage('calendar.dat')
+storage = Storage('secret/calendar.dat')
 credentials = storage.get()
+http = httplib2.Http()
+
 if credentials is None or credentials.invalid == True:
 	credentials = run(FLOW, storage)
+else:
+	credentials.refresh()
 
-http = httplib2.Http()
 http = credentials.authorize(http)
 
+f = open("secret/other.json")
+secrets = json.loads(f.read())
+f.close()
+
 service = build(serviceName='calendar', version='v3', http=http,
-	developerKey=secrets[2])
+	developerKey=secrets['public_api']['API_key'])
 
 page_token = None
 
@@ -98,4 +111,3 @@ date_end = date_start + one_day
 time_min = zone.localize(date_start).strftime(fmt)
 time_max = zone.localize(date_end).strftime(fmt)
 """
-
