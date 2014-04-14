@@ -85,7 +85,7 @@ def getCalendars(calendarService):
 		#
 		page_token = calendar_list.get('nextPageToken')
 		#
-		print '.'
+		print '.',
 		if not page_token:
 			break
 	#
@@ -108,7 +108,7 @@ def getTodaysEvents(calendars, calendarService):
 			events += todaysEvents['items']
 			page_token = todaysEvents.get('nextPageToken')
 			#
-			print '.'
+			print '.',
 			if not page_token:
 				break
 	#
@@ -133,6 +133,9 @@ def timestampToEnglish(timestamp):
 		return str(hour) + ":" + minute + " a.m."
 
 def toEnglish(personName, events):
+	if not events:
+		return "Nothing planned for you today, " + personName
+	#
 	breifing = "Your schedule for today, " + personName + ". "
 	#
 	for event in events:
@@ -168,9 +171,8 @@ def main():
 		#
 		schedules += toEnglish(users[user_id]['Name'], events) + "\n"
 	#
-	writeToFile(schedules, SPEECH_FILE)
-	#
-	dictate()
+	return schedules
 
 if __name__ == "__main__":
-	main()
+	writeToFile(main(), SPEECH_FILE)
+	dictate()

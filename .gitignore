@@ -3,3 +3,4 @@ proprietary/GoogleCalendar/secret
 proprietary/GoogleCalendar/calendarAPI.py
 proprietary/GoogleCalendar/calendarServiceAPI.py
 proprietary/GoogleCalendar/calendar_dictation.txt
+proprietary/ForecastIO/secret
