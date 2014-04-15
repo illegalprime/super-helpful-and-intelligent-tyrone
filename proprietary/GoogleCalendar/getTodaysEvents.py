@@ -9,11 +9,6 @@ from oauth2client.file   import Storage
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.tools  import run
 
-from subprocess import call
-
-SPEECH_COMMAND = "../../speech/readFile.sh"
-SPEECH_FILE = "calendar_dictation.txt"
-
 def getTodaysTimeRange():
 	day = time.localtime().tm_mday
 	nform = '%Y-%m-' + str(day) + 'T00:00:00%z'
@@ -149,14 +144,6 @@ def toEnglish(personName, events):
 	#
 	return breifing
 
-def writeToFile(data, fileName):
-	output = open(SPEECH_FILE, "w")
-	output.write(data)
-	output.close()
-
-def dictate():
-	call([SPEECH_COMMAND, SPEECH_FILE])
-
 def main():
 	users = getRegisteredUsers()
 	schedules = ""
@@ -173,6 +160,6 @@ def main():
 	#
 	return schedules
 
-if __name__ == "__main__":
-	writeToFile(main(), SPEECH_FILE)
-	dictate()
+#if __name__ == "__main__":
+#	writeToFile(main(), SPEECH_FILE)
+#	dictate()

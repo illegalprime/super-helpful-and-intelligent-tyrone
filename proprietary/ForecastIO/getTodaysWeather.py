@@ -39,9 +39,9 @@ def getTodaysWeather():
 	services = getForecastServices()
 	#
 	for location in services:
-		english += "It is currently " + str(getCurrentTemp(services[location])) + \
+		english += "It is currently " + str(int(round(getCurrentTemp(services[location])))) + \
 			" degrees in " + location + \
-			" with a high today of " + str(getDailyHigh(services[location])) + " .\n"
+			" with a high today of " + str(int(round(getDailyHigh(services[location])))) + " .\n"
 	#
 	return english
 
