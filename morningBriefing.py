@@ -2,6 +2,9 @@
 import os
 import sys
 
+from subprocess import call
+from time import sleep
+
 sys.path.append("proprietary/ForecastIO")
 sys.path.append("proprietary/GoogleCalendar")
 sys.path.append("speech/")
@@ -42,3 +45,11 @@ english = "Good morning, " + people + ". " + weather + schedule
 print
 
 speechWrapper.speak(english)
+
+sleep(1)
+
+speechWrapper.speak("Starting Pandora Radio.")
+
+os.chdir("../proprietary/Pandora")
+
+call(["./startPandora.sh"])
