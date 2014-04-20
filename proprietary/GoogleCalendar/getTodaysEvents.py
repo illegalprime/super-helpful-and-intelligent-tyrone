@@ -10,11 +10,10 @@ from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.tools  import run
 
 def getTodaysTimeRange():
-	day = time.localtime().tm_mday
-	nform = '%Y-%m-' + str(day) + 'T00:00:00%z'
+	nform = '%Y-%m-%dT00:00:00%z'
 	time_min = time.strftime(nform)
 	#
-	nform = '%Y-%m-' + str(day + 1) + 'T00:00:00%z'
+	nform = '%Y-%m-%dT23:59:59%z'
 	time_max = time.strftime(nform)
 	#
 	return [time_min, time_max]

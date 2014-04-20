@@ -9,3 +9,5 @@ mkdir ~/.config/pianobar
 cat secret/pianobar.conf > ~/.config/pianobar/config
 
 mkfifo ~/.config/pianobar/ctl
+
+ln -s ~/.config/pianobar/ctl .
