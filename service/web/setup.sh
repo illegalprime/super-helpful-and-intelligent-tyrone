@@ -9,5 +9,4 @@ sudo systemctl start lighttpd
 sudo systemctl enable lighttpd
 
 ## Needs attention
-sudo cp -R ./www/ /srv/http/
-
+sudo cp -R /home/mde/cde/Tyrone/service/web/www/* /srv/http
