@@ -1,0 +1,51 @@
+<html><head>
+
+<script type="text/javascript">
+
+function togglePlay() {
+	sendPandoraCommand("PLAY");
+}
+
+function start () {
+	sendPandoraCommand("START");
+}
+
+function stop () {
+	sendPandoraCommand("QUIT");
+}
+
+function next () {
+	sendPandoraCommand("NEXT");
+}
+
+function like () {
+	sendPandoraCommand("LIKE");
+}
+
+function dislike () {
+	sendPandoraCommand("DISLIKE");
+}
+
+function bookmark () {
+	sendPandoraCommand("BOOKMARK");
+}
+
+function sendPandoraCommand(comm) {
+	var httpReq = new XMLHttpRequest();
+	httpReq.open("GET", "actions/tcp_wrapper.php?comm=PANDORA:" + comm, true);
+	httpReq.send();
+}
+
+</script>
+
+</head><body>
+
+<button onclick="togglePlay()">Pause/Play</button>
+<button onclick="start()">Turn On</button>
+<button onclick="stop()">Turn Off</button>
+<button onclick="next()">Next Song</button>
+<button onclick="like()">Like</button>
+<button onclick="dislike()">Dislike</button>
+<button onclick="bookmark()">Bookmark</button>
+
+</body></html>
