@@ -1,7 +1,6 @@
 #!/bin/php
 <?php
 if (!array_key_exists("comm", $_GET)) {
-	echo '1';
 	echo "ERR>" . GET2String();
 	return;
 }
@@ -9,12 +8,11 @@ if (!array_key_exists("comm", $_GET)) {
 $client = stream_socket_client("tcp://127.0.0.1:8489", $errno, $errmsg);
 
 if ($client === false) {
-	echo '2';
 	echo "ERR>" . GET2String();
 	return;
 }
 
-fwrite($client, $_GET["comm"] . "\r\n");
+fwrite($client, $_GET["comm"] . "\n");
 echo nl2br(stream_get_contents($client)) . ">" . GET2String();
 
 fclose($client);

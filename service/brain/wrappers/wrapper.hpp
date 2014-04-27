@@ -2,5 +2,6 @@
 
 class Wrapper {
 public:
-	virtual bool handleCommand(std::string&) = 0;
+	virtual void handleCommand(std::string&, std::string&) = 0;
+	const char* ID;
 };

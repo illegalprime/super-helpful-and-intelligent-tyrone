@@ -5,35 +5,56 @@
 #include <iostream>
 #include "./wrapper.hpp"
 
-#define ctlFIFO "../../../proprietary/Pandora/ctl"
+#define ctlFIFO "../../proprietary/Pandora/ctl"
+
+using namespace std;
 
 class PandoraRadio : public Wrapper {
 public:
-	bool handleCommand(std::string& comm) {
-		if (comm == "START" && radioProcess == NULL) {
-			startRadio();
-		}
-		else if (comm == "QUIT" && radioProcess != NULL) {
-			stopRadio();
-		}
-		else {
-			if (comm == "PAUSE" || comm == "PLAY") {
+	const char* ID;
+
+	PandoraRadio() {
+		ID = "PANDORA";
+	}
+
+	void handleCommand(std::string& comm, std::string& output) {
+		try {
+		if (radioProcess != NULL) {
+			if (comm.compare("PAUSE") == 0 || comm.compare("PLAY") == 0) {
 				sendToFIFO('p');
 			}
-			else if (comm == "LIKE") {
+			else if (comm.compare("LIKE") == 0) {
 				sendToFIFO('+');
 			}
-			else if (comm == "DISLIKE") {
+			else if (comm.compare("DISLIKE") == 0) {
 				sendToFIFO('-');
 			}
-			else if (comm == "BOOKMARK") {
+			else if (comm.compare("BOOKMARK") == 0) {
 				sendToFIFO('b');
 			}
-			else if (comm == "NEXT") {
+			else if (comm.compare("NEXT") == 0) {
 				sendToFIFO('n');
 			}
+			else if (comm.compare("QUIT") == 0) {
+				stopRadio();
+			}
+			else if (comm.compare("START") == 0) {
+				output = "Pandora is already on.";
+			}
+			else {
+				output = "'" + comm + "' is not a command.";
+			}
 		}
-		return true;
+		else {
+			if (comm.compare("START") == 0 && radioProcess == NULL) {
+				startRadio();
+			}
+			else {
+				output = "Pandora is not on.";
+			}
+		}
+
+		} catch (std::exception& err) {  output = err.what();  }
 	}
 
 private:
@@ -42,33 +63,20 @@ private:
 
 	void startRadio() {
 		radioProcess = popen("pianobar", "r");
+		
 		pandoraCtl.open(ctlFIFO, std::ofstream::app);
 	}
 
 	void stopRadio() {
 		sendToFIFO('q');
 		pandoraCtl.close();
+
 		pclose(radioProcess);
 		radioProcess = NULL;
 	}
 
 	void sendToFIFO(char comm) {
 		pandoraCtl << comm;
+		pandoraCtl.flush();
 	}
 };
-
-/*
-int main() {
-	PandoraRadio radio;
-	std::string comm = "START";
-
-	radio.handleCommand(comm);
-
-	std::cin.get();
-
-	comm = "QUIT";
-	radio.handleCommand(comm);
-
-	return 0;
-}
-*/
