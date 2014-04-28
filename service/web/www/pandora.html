@@ -1,51 +1,96 @@
 <html><head>
 
-<script type="text/javascript">
+<script type="text/javascript"></script>
 
-function togglePlay() {
-	sendPandoraCommand("PLAY");
-}
+</head><body>
 
-function start () {
-	sendPandoraCommand("START");
-}
+<button id="playPauseToggle">Play</button>
+<button id="radioPower">Turn On</button>
+<br/>
+<button id="likeBtn">Like</button>
+<button id="dislikeBtn">Dislike</button>
+<br/>
+<button id="nextBtn">Next Song</button>
+<button id="tiredBtn">Tired</button>
+<br/>q
+<button id="volUpBtn">Vol+</button>
+<button id="volResetBtn">Vol0</button>
+<button id="volDownBtn">Vol-</button>
+<br/>
+<button id="bookmarkBtn">Bookmark</button>
 
-function stop () {
-	sendPandoraCommand("QUIT");
-}
+<script type="text/javascript"> 
+var isPlaying = false;
+var isOn      = false;
 
-function next () {
-	sendPandoraCommand("NEXT");
-}
-
-function like () {
-	sendPandoraCommand("LIKE");
-}
-
-function dislike () {
-	sendPandoraCommand("DISLIKE");
-}
-
-function bookmark () {
-	sendPandoraCommand("BOOKMARK");
-}
+var togglePlayBtn  = document.getElementById('playPauseToggle');
+var togglePowerBtn = document.getElementById('radioPower');
+var nextBtn        = document.getElementById('nextBtn');
+var likeBtn        = document.getElementById('likeBtn');
+var dislikeBtn     = document.getElementById('dislikeBtn');
+var bookmarkBtn    = document.getElementById('bookmarkBtn');
+var tiredBtn       = document.getElementById('tiredBtn');
+var volUpBtn       = document.getElementById('volUpBtn');
+var volResetBtn    = document.getElementById('volResetBtn');
+var volDownBtn     = document.getElementById('volDownBtn');
 
 function sendPandoraCommand(comm) {
 	var httpReq = new XMLHttpRequest();
+	httpReq.onreadystatechange = function () {
+		
+	};
 	httpReq.open("GET", "actions/tcp_wrapper.php?comm=PANDORA:" + comm, true);
 	httpReq.send();
 }
 
+function responseCallback() {
+	// body...
+}
+
+togglePlayBtn.onclick = function() 
+{
+	if (isPlaying) {
+		sendPandoraCommand("PAUSE");
+		isPlaying = false;
+		togglePlayBtn.innerHTML = "Play";
+	}
+	else {
+		sendPandoraCommand("PLAY");
+		isPlaying = true;
+		togglePlayBtn.innerHTML = "Pause";
+	}
+};
+
+togglePowerBtn.onclick = function() 
+{
+	if (isOn) {
+		sendPandoraCommand("QUIT");
+		isOn = false;
+		togglePowerBtn.innerHTML = "Turn On";
+		
+	}
+	else {
+		sendPandoraCommand("START");
+		isOn = true;
+		togglePowerBtn.innerHTML = "Turn Off";
+	}
+}
+
+nextBtn.onclick     = function() { sendPandoraCommand("NEXT"); }
+
+likeBtn.onclick     = function() { sendPandoraCommand("LIKE"); }
+
+dislikeBtn.onclick  = function() { sendPandoraCommand("DISLIKE"); }
+
+bookmarkBtn.onclick = function() { sendPandoraCommand("BOOKMARK"); }
+
+tiredBtn.onclick    = function() { sendPandoraCommand("TIRED"); }
+
+volUpBtn.onclick    = function() { sendPandoraCommand("VOLUP"); }
+
+volResetBtn.onclick = function() { sendPandoraCommand("VOL0"); }
+
+volDownBtn.onclick  = function() { sendPandoraCommand("VOLDOWN"); }
 </script>
-
-</head><body>
-
-<button onclick="togglePlay()">Pause/Play</button>
-<button onclick="start()">Turn On</button>
-<button onclick="stop()">Turn Off</button>
-<button onclick="next()">Next Song</button>
-<button onclick="like()">Like</button>
-<button onclick="dislike()">Dislike</button>
-<button onclick="bookmark()">Bookmark</button>
 
 </body></html>

@@ -37,11 +37,12 @@ int main(int argc, char* argv[]) {
 			istream requestStream(&requestBuffer);
 			getline(requestStream, request);
 			
-			response = handleRequest(request);
+			response = handleRequest(request) + "\n";
 
 			boost::asio::write(socket, boost::asio::buffer(response), unimportantError);
 			cout << "Request:  " << request  << endl
-				 << "Response: " << response << endl << endl;
+				 << "Response: " << response << endl;
+			socket.close();
 		}
 	}
 	catch (std::exception& err) {

@@ -20,8 +20,14 @@ public:
 	void handleCommand(std::string& comm, std::string& output) {
 		try {
 		if (radioProcess != NULL) {
-			if (comm.compare("PAUSE") == 0 || comm.compare("PLAY") == 0) {
+			if (comm.compare("TOGGLE") == 0) {
 				sendToFIFO('p');
+			}
+			else if (comm.compare("PLAY") == 0) {
+				sendToFIFO('P');
+			}
+			else if (comm.compare("PAUSE") == 0) {
+				sendToFIFO('S');
 			}
 			else if (comm.compare("LIKE") == 0) {
 				sendToFIFO('+');
@@ -34,6 +40,21 @@ public:
 			}
 			else if (comm.compare("NEXT") == 0) {
 				sendToFIFO('n');
+			}
+			else if (comm.compare("CHANGE_STATION") == 0) {
+				sendToFIFO('s');
+			}
+			else if (comm.compare("VOLUP") == 0) {
+				sendToFIFO(')');	
+			}
+			else if (comm.compare("VOLDOWN") == 0) {
+				sendToFIFO('(');
+			}
+			else if (comm.compare("VOL0") == 0) {
+				sendToFIFO('^');
+			}
+			else if (comm.compare("TIRED") == 0) {
+				sendToFIFO('t');
 			}
 			else if (comm.compare("QUIT") == 0) {
 				stopRadio();
@@ -53,8 +74,10 @@ public:
 				output = "Pandora is not on.";
 			}
 		}
-
-		} catch (std::exception& err) {  output = err.what();  }
+		} catch (std::exception& err) {  
+			output = err.what();  
+			output = "Error: " + output;
+		}
 	}
 
 private:
