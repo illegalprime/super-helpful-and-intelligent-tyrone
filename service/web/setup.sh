@@ -1,11 +1,11 @@
 #!/bin/bash
 
-sudo pacman -S lighttpd php php-cgi
+pacman -S lighttpd php php-cgi   # requires root 
 
-sudo bash -c 'cat ./fastcgi.conf >> /etc/lighttpd/lighttpd.conf'
+ bash -c 'cat ./fastcgi.conf >> /etc/lighttpd/lighttpd.conf'  # requires root
 
-sudo systemctl start lighttpd
+ systemctl start lighttpd  # requires root
 
-sudo systemctl enable lighttpd
+ systemctl enable lighttpd  # requires root
 
-sudo cp -R ./www/* /srv/http
+cp -R ./www/* /srv/http  # requires root

@@ -1,3 +1,4 @@
 #!/bin/bash
+pacman -S python2-pip    # requires root
 
-sudo pip install python-forecastio geopy
+pip2 install python-forecastio geopy  # requires root

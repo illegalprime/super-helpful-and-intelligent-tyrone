@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo pacman -S pianobar
+pacman -S pianobar   # requires root
 
 echo 'default_driver=pulse' >/etc/libao.conf
 
@@ -10,4 +10,4 @@ cat secret/pianobar.conf > ~/.config/pianobar/config
 
 mkfifo ~/.config/pianobar/ctl
 
-ln -s ~/.config/pianobar/ctl .
+ln -f -s ~/.config/pianobar/ctl .
