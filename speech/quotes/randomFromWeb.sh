@@ -6,12 +6,12 @@ if [ $(cat "$OWN_FILE") -eq 1 ]; then
 	echo "One instance is already running, close this first."
 	exit 2
 else 
-	echo 1 > "$OWN_FILE"
-
 	if [ ! -f "$1" ]; then
 		echo "No list of links given. Exiting..."
 		exit 1
 	fi
+
+	echo 1 > "$OWN_FILE"
 
 	getQuote() {
 
