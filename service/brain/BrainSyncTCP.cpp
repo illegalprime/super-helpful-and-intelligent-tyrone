@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
 		tcp::acceptor acceptor(ioServ, tcp::endpoint(tcp::v4(), PORT));
 
-		cout << "Bound to port " << PORT << "\n";
+		cout << "Bound to " << "127.0.0.1:" << PORT << "\n";
 
 		while (true) {
 			boost::asio::streambuf requestBuffer;
